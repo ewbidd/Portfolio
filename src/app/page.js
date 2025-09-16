@@ -1,103 +1,231 @@
+"use client";
+import TypedText from "./components/TypedText";
 import Image from "next/image";
+import SpotlightEffect from "./components/SpotlightEffect";
+import { useRef, useState, useEffect } from "react";
+import projectData from "./projectData";
 
-export default function Home() {
+export default function Page() {
+  // Contact form logic
+  const formRef = useRef(null);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(null);
+  // Overlay state
+  const [overlay, setOverlay] = useState({ open: false, idx: null });
+  const [showOverlay, setShowOverlay] = useState(false); // for fade
+
+  useEffect(() => {
+    if (overlay.open) {
+      setShowOverlay(true);
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+      const timeout = setTimeout(() => setShowOverlay(false), 350); // tunggu animasi selesai
+      return () => clearTimeout(timeout);
+    }
+  }, [overlay.open]);
+
+  // Inject overlay.css if not present
+  useEffect(() => {
+    if (!document.getElementById('project-overlay-css')) {
+      const link = document.createElement('link');
+      link.id = 'project-overlay-css';
+      link.rel = 'stylesheet';
+      link.href = '/css/overlay.css';
+      document.head.appendChild(link);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (success !== null) {
+      const timer = setTimeout(() => setSuccess(null), 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [success]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setSuccess(null);
+    const form = formRef.current;
+    const data = {
+      name: form.name.value,
+      email: form.email.value,
+      message: form.message.value,
+    };
+    try {
+      const res = await fetch("https://formspree.io/f/xblknqog", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+      if (res.ok) {
+        setSuccess(true);
+        form.reset();
+      } else {
+        setSuccess(false);
+      }
+    } catch {
+      setSuccess(false);
+    }
+    setLoading(false);
+  };
+
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <>
+      {/* Home Section */}
+      <section id="hero" className="section-full d-flex flex-column justify-content-center align-items-center text-center">
+        <TypedText />
+        <p id="aboutmeNama" className="mt-3">Muhammad Abidillah.</p>
+        <p id="aboutmeDeskripsi">A beginner who wants to grow more.</p>
+      </section>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      {/* Projects Section */}
+      <SpotlightEffect />
+      <section id="projects" className="section-full container d-flex flex-column justify-content-center">
+        <h2 className="text-center mb-4">Projects</h2>
+        <div className="row g-4 justify-content-center">
+          {projectData.map((proj, idx) => (
+            <div className="col-md-4" key={idx}>
+              <div
+                className="p-3 border rounded spotlight-card"
+                style={{ cursor: "pointer" }}
+                onClick={() => setOverlay({ open: true, idx })}
+              >
+                <h4 className="mb-4">{proj.title}</h4>
+                <p>{proj.description}</p>
+                <Image src={proj.image} alt={proj.title} width={400} height={300} className="img-fluid rounded mt-3" />
+              </div>
+            </div>
+          ))}
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+
+        {/* Overlay Project Detail */}
+        {showOverlay && overlay.idx !== null && (
+          <div
+            className={`project-overlay-fade ${overlay.open ? "show" : ""}`}
+            style={{
+              position: "fixed",
+              top: 0, left: 0, right: 0, bottom: 0,
+              background: "rgba(0,0,0,0.7)",
+              zIndex: 9999,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            onClick={() => setOverlay({ open: false, idx: null })}
+          >
+            <div
+              className={`project-overlay-content ${overlay.open ? "show" : ""}`}
+              style={{
+                background: "#222",
+                color: "#fff",
+                padding: 32,
+                borderRadius: 16,
+                maxWidth: 520,
+                width: "95%",
+                position: "relative",
+                boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+              }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                style={{
+                  position: "absolute",
+                  top: 16,
+                  right: 16,
+                  background: "transparent",
+                  border: "none",
+                  color: "#fff",
+                  fontSize: 24,
+                  cursor: "pointer",
+                }}
+                onClick={() => setOverlay({ open: false, idx: null })}
+                aria-label="Close"
+              >
+                &times;
+              </button>
+              <Image
+                src={projectData[overlay.idx].image}
+                alt={projectData[overlay.idx].title}
+                width={400}
+                height={300}
+                className="img-fluid rounded mb-3"
+                style={{ objectFit: "cover" }}
+              />
+              <h3 className="mb-3" style={{ textAlign: "center", width: "100%" }}>
+                {projectData[overlay.idx].title}
+              </h3>
+              <p style={{ textAlign: "center" }}>
+                {projectData[overlay.idx].detail}
+              </p>
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* Experience Section */}
+      <section id="experience" className="container py-5">
+        <h2 className="text-center mb-5 text-white">My Experiences</h2>
+        <div className="position-relative">
+          <div className="border-start border-info position-absolute top-0 bottom-0 start-50 translate-middle-x d-none d-md-block neon-glow-vertical" style={{ width: "5px" }}></div>
+          <div className="row mb-5">
+            <div className="col-md-6 text-end pe-md-4">
+              <div className="bg-dark text-light p-4 rounded">
+                <h5 className="fw-bold">Family Gathering</h5>
+                <p>Electrical Engineering Student Association - Secretariat Division</p>
+                <small>October 2023</small>
+              </div>
+            </div>
+          </div>
+          <div className="row mb-5">
+            <div className="col-md-6 d-flex align-items-center justify-content-end position-relative order-md-1"></div>
+            <div className="col-md-6 order-md-2 ps-md-4">
+              <div className="bg-dark text-light p-4 rounded shadow">
+                <h5 className="fw-bold">Internship Staff</h5>
+                <p>Electrical Engineering Student Association - Advocacy Division</p>
+                <small>April 2024</small>
+              </div>
+            </div>
+          </div>
+          <div className="row mb-5">
+            <div className="col-md-6 text-end pe-md-4">
+              <div className="bg-dark text-light p-4 rounded shadow">
+                <h5 className="fw-bold">ERC</h5>
+                <p>Engineering Robotics Club - Assets Management Division</p>
+                <small>2025</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="section-full d-flex flex-column justify-content-center align-items-center text-center">
+        <h2 className="mb-4">Contact Me</h2>
+        <form ref={formRef} onSubmit={handleSubmit} className="contact-form p-4 rounded shadow" style={{ maxWidth: 400, width: '100%', background: 'rgba(30,30,30,0.7)' }}>
+          <div className="mb-3">
+            <input name="name" type="text" className="form-control dark-placeholder" placeholder="Your Name" required />
+          </div>
+          <div className="mb-3">
+            <input name="email" type="email" className="form-control dark-placeholder" placeholder="Your Email" required />
+          </div>
+          <div className="mb-3">
+            <textarea name="message" className="form-control dark-placeholder" placeholder="Your Message" rows={4} required></textarea>
+          </div>
+          <button type="submit" className="btn btn-dark w-100" disabled={loading}>
+            {loading ? "Sending..." : "Send Message"}
+          </button>
+        </form>
+        {success === true && <div className="alert alert-success mt-3">Message sent successfully!</div>}
+        {success === false && <div className="alert alert-danger mt-3">Failed to send message. Please try again.</div>}
+      </section>
+    </>
   );
 }
