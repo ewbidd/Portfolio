@@ -45,7 +45,7 @@ export default function TypedText() {
 
   return (
     <h1>
-      Hello, I'm a <span className="neon-text">{displayText}</span>
+      Hello, Im a <span className="neon-text">{displayText}</span>
     </h1>
   );
 }
