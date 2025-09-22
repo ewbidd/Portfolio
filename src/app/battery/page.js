@@ -1313,7 +1313,7 @@ export default function BatteryReportPage() {
   </table>
   <h2>Battery capacity history</h2>
   <div className="explanation">
-    Charge capacity history of the system's batteries
+    Charge capacity history of the systems batteries
   </div>
   <table>
     <colgroup>
