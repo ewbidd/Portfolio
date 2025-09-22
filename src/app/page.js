@@ -86,7 +86,7 @@ export default function Page() {
       {/* Projects Section */}
       <SpotlightEffect />
       <section id="projects" className="section-full container d-flex flex-column justify-content-center">
-        <h2 className="text-center mb-4">Something I've Done</h2>
+        <h2 className="text-center mb-4">Something I&rsquo;ve Done</h2>
         <div className="row g-4 justify-content-center">
           {projectData.map((proj, idx) => (
             <div className="col-md-4" key={idx}>
