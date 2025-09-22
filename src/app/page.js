@@ -86,7 +86,7 @@ export default function Page() {
       {/* Projects Section */}
       <SpotlightEffect />
       <section id="projects" className="section-full container d-flex flex-column justify-content-center">
-        <h2 className="text-center mb-4">Projects</h2>
+        <h2 className="text-center mb-4">Something I've Done</h2>
         <div className="row g-4 justify-content-center">
           {projectData.map((proj, idx) => (
             <div className="col-md-4" key={idx}>
@@ -172,7 +172,7 @@ export default function Page() {
 
       {/* Experience Section */}
       <section id="experience" className="container py-5">
-        <h2 className="text-center mb-5 text-white">My Experiences</h2>
+        <h2 className="text-center mb-5 text-white">Experiences</h2>
         <div className="position-relative">
           <div className="border-start border-info position-absolute top-0 bottom-0 start-50 translate-middle-x d-none d-md-block neon-glow-vertical" style={{ width: "5px" }}></div>
           <div className="row mb-5">
@@ -203,6 +203,25 @@ export default function Page() {
               </div>
             </div>
           </div>
+          <div className="row mb-5">
+            <div className="col-md-6 d-flex align-items-center justify-content-end position-relative order-md-1"></div>
+            <div className="col-md-6 order-md-2 ps-md-4">
+              <div className="bg-dark text-light p-4 rounded shadow">
+                <h5 className="fw-bold">Public Lecture</h5>
+                <p>Telecomunication and Internet - Equipment Head Division</p>
+                <small>September 2025</small>
+              </div>
+            </div>
+          </div>
+          <div className="row mb-5">
+            <div className="col-md-6 text-end pe-md-4">
+              <div className="bg-dark text-light p-4 rounded shadow">
+                <h5 className="fw-bold">Intership</h5>
+                <p>Diskominfo Prov. Riau - Statistic</p>
+                <small>Sept 2025 - Des 2025</small>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -211,15 +230,26 @@ export default function Page() {
         <h2 className="mb-4">Contact Me</h2>
         <form ref={formRef} onSubmit={handleSubmit} className="contact-form p-4 rounded shadow" style={{ maxWidth: 400, width: '100%', background: 'rgba(30,30,30,0.7)' }}>
           <div className="mb-3">
-            <input name="name" type="text" className="form-control dark-placeholder" placeholder="Your Name" required />
+            <input name="name" type="text" className="form-control dark-placeholder" placeholder="John Doe" required />
           </div>
           <div className="mb-3">
-            <input name="email" type="email" className="form-control dark-placeholder" placeholder="Your Email" required />
+            <input name="email" type="email" className="form-control dark-placeholder" placeholder="john.doe@email.com" required />
           </div>
           <div className="mb-3">
-            <textarea name="message" className="form-control dark-placeholder" placeholder="Your Message" rows={4} required></textarea>
+            <textarea name="message" className="form-control dark-placeholder" placeholder="“Hi!”" rows={4} required></textarea>
           </div>
-          <button type="submit" className="btn btn-dark w-100" disabled={loading}>
+          <button
+            type="submit"
+            className="neon-glow btn btn-dark w-100 btn-send-glass"
+            disabled={loading}
+            onMouseEnter={e => {
+              const btn = e.currentTarget;
+              btn.classList.remove("glass-animate");
+              // trigger reflow to restart animation
+              void btn.offsetWidth;
+              btn.classList.add("glass-animate");
+            }}
+          >
             {loading ? "Sending..." : "Send Message"}
           </button>
         </form>

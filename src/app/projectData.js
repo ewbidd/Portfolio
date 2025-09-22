@@ -17,6 +17,18 @@ const projectData = [
     image: "/asset/kopi.png",
     detail: "Aplikasi ini memberikan panduan langkah demi langkah dalam membuat berbagai jenis kopi, mulai dari espresso hingga manual brew, langsung dari terminal. Cocok untuk pengguna yang menyukai antarmuka sederhana dan efisien tanpa GUI.",
   },
+  {
+    title: "Terminal based coffe guide application",
+    description: "Membangun aplikasi panduan membuat kopi berbasis terminal.",
+    image: "/asset/kopi.png",
+    detail: "Aplikasi ini memberikan panduan langkah demi langkah dalam membuat berbagai jenis kopi, mulai dari espresso hingga manual brew, langsung dari terminal. Cocok untuk pengguna yang menyukai antarmuka sederhana dan efisien tanpa GUI.",
+  },
+  {
+    title: "Terminal based coffe guide application",
+    description: "Membangun aplikasi panduan membuat kopi berbasis terminal.",
+    image: "/asset/kopi.png",
+    detail: "Aplikasi ini memberikan panduan langkah demi langkah dalam membuat berbagai jenis kopi, mulai dari espresso hingga manual brew, langsung dari terminal. Cocok untuk pengguna yang menyukai antarmuka sederhana dan efisien tanpa GUI.",
+  },
 ];
 
 export default projectData;
