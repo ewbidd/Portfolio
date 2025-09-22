@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 
 export default function BatteryReportPage() {
   return (
@@ -16,18 +17,8 @@ export default function BatteryReportPage() {
         "\n    body {\n          letter-spacing: 0.02em;\n      background-color: #181818;\n      color: #F0F0F0;\n      margin-left: 5.5em;\n    }\n\n    h1 {\n      color: #11D8E8;\n      font-size: 42pt;\n    }\n\n    h2 {\n      font-size: 15pt;\n      color: #11EEF4;\n      margin-top: 4em;\n      margin-bottom: 0em;\n      letter-spacing: 0.08em;\n    }\n\n    td {\n      padding-left: 0.3em;\n      padding-right: 0.3em;\n    }\n\n    .nobatts {\n      font-family: Segoe UI Semibold;\n      background: #272727;\n      color: #ACAC60;\n      font-size: 13pt;\n      padding-left: 0.4em;\n      padding-right: 0.4em;\n      padding-top: 0.3em;\n      padding-bottom: 0.3em;\n    }\n\n    .explanation {\n      color: #777777;\n      font-size: 12pt;\n      margin-bottom: 1em;\n    }\n\n    .explanation2 {\n      color: #777777;\n      font-size: 12pt;\n      margin-bottom: 0.1em;\n    }\n\n    table {\n      border-width: 0;\n      table-layout: fixed;\n      font-family: Segoe UI Light;\n      letter-spacing: 0.02em;\n      background-color: #181818;\n      color: #f0f0f0;\n    }\n\n    .even {\n      background: #272727;\n    }\n\n    .odd {\n      background: #1E1E1E;\n    }\n\n    .even.suspend {\n      background: #1A1A28;\n    }\n\n    .odd.suspend {\n      background: #1A1A2C;\n    }\n\n    thead {\n      font-family: Segoe UI Semibold;\n      font-size: 85%;\n      color: #BCBCBC;\n    }\n\n    text {\n      font-size: 12pt;\n      font-family: Segoe UI Light;\n      fill: #11EEF4;\n    }\n\n    .centered {\n      text-align: center;\n    }\n\n    .label {\n      font-family: Segoe UI Semibold;\n      font-size: 85%;\n      color: #BCBCBC;\n    }\n\n    .dc.even {\n      background: #40182C;\n    }\n\n    .dc.odd {\n      background: #30141F;\n    }\n\n    td.colBreak {\n      padding: 0;\n      width: 0.15em;\n    }\n\n    td.state {\n      text-align: center;\n    }\n\n    td.hms {\n      font-family: Segoe UI Symbol;\n      text-align: right;\n      padding-right: 3.4em;\n    }\n\n    td.dateTime {\n      font-family: Segoe UI Symbol;\n    }\n\n    td.nullValue {\n      text-align: center;\n    }\n\n    td.percent {\n      font-family: Segoe UI Symbol;\n      text-align: right;\n      padding-right: 2.5em;\n    }\n\n    col:first-child {\n      width: 13em;\n    }\n\n    col.col2 {\n      width: 10.4em;\n    }\n\n    col.percent {\n      width: 7.5em;\n    }\n\n    td.mw {\n      text-align: right;\n      padding-right: 2.5em;\n    }\n\n    td.acdc {\n      text-align: center;\n    }\n\n    span.date {\n      display: inline-block;\n      width: 5.5em;\n    }\n\n    span.time {\n      text-align: right;\n      width: 4.2em;\n      display: inline-block;\n    }\n\n    text {\n      font-family: Segoe UI Symbol;\n    }\n\n    .noncontigbreak {\n      height: 0.3em;\n      background-color: #1A1A28;\n    }\n  "
     }}
   />
-<h1 style={{ justifyContent: "center", display: "flex", alignItems: "center", gap: "1rem", margin: 0 }}>
-  why you here lmao.
-  <a
-    href="/"
-    style={{
-      color: "#11D8E8",
-      textDecoration: "underline",
-      fontSize: "inherit", // ikutin ukuran h1
-    }}
-  >
-    go back
-  </a>
+<h1 style={{ display: "flex", justifyContent: "center", gap: "1rem",}}> why you here lmao.
+      <Link href="/" style={{ color: "#11D8E8", textDecoration: "underline", fontSize: "inherit", }} > go back</Link>
 </h1>
 
   <h1>Battery report</h1>
