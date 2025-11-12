@@ -24,6 +24,20 @@ body.notfound-page .social-bar-sticky {
 body.notfound-page header {
   display: none !important;
 }
+
+/* ligma-mode: hide site chrome (header/footer/particles/spotlight/socialbar) and set page-specific styles */
+body.ligma-mode {
+  background: #ffffff !important;
+  color: #000 !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+body.ligma-mode header,
+body.ligma-mode footer,
+body.ligma-mode .social-bar-sticky,
+body.ligma-mode .particles-canvas,
+body.ligma-mode .spotlight-layer {
+  display: none !important;
+}
 .nav-underline-anim {
   pointer-events: none;
 }
