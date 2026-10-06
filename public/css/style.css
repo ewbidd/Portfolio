@@ -336,14 +336,23 @@ header {
     0 0 20px rgba(0, 240, 255, 0.2);
 }
 
-.neon-icon {
-  display: inline-block;
-  position: relative;
-  color: #fff;
+/* Neon icon smooth hover transition */
+.neon-icon-wrap {
+  display: inline-grid;
   text-decoration: none;
 }
 
-.neon-icon:hover {
+.neon-icon-base {
+  color: #fff;
+  transition: color 0.4s ease, -webkit-text-fill-color 0.4s ease, text-shadow 0.4s ease;
+}
+
+.neon-icon-base,
+.neon-icon-overlay {
+  grid-area: 1 / 1;
+}
+
+.neon-icon-overlay {
   background: linear-gradient(90deg,
       #00f0ff 0%,
       #00d4ff 5%,
@@ -368,8 +377,21 @@ header {
       #00f0ff 100%);
   background-size: 500%;
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: neonIconFlow 7s linear infinite;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.neon-icon-wrap:hover .neon-icon-overlay {
+  opacity: 1;
+}
+
+.neon-icon-wrap:hover .neon-icon-base {
+  color: transparent;
+  -webkit-text-fill-color: transparent;
   text-shadow:
     0 0 5px rgba(0, 240, 255, 0.5),
     0 0 10px rgba(0, 240, 255, 0.3),
